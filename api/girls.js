@@ -23,6 +23,9 @@ export default async function handler(req, res) {
     console.log("Some called /api/girls/ endpoint :) Method: ", req.method) 
 
     switch (req.method) {
+        case "OPTIONS" :
+            return res.status(204).end()
+
         case "GET" :  
             conn = getCreatedConnection()
             const sql = `SELECT id, first_name, last_name, birth_at, `

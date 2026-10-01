@@ -30,7 +30,7 @@ export default async function handler(req, res) {
                 
             })
             conn.destroy()
-            return res.status(200).json({result: data})    
+            return res.status(200).json({result})    
             
         default :
             conn.destroy()

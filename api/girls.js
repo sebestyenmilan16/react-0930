@@ -4,23 +4,33 @@
 */
 import mysql from 'mysql2'
 
-export const conn = mysql.createConnection({
+export const connectionOptions = {
     host: process.env.MYSQL_HOST,
-    port: process.env.MYSQL_PORT || 3306,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DB
-})
+        port: process.env.MYSQL_PORT || 3306,
+        user: process.env.MYSQL_USER,
+        password: process.env.MYSQL_PASSWORD,
+        database: process.env.MYSQL_DB
+}
+
+export const getCreatedConnection = (connectionOptions) => mysql.createConnection(connectionOptions)
+
 
 export default async function handler(req, res) {
     console.log("Some called /api/girls/ endpoint :) ")
 
     switch (req.method) {
         case "GET" :   
-            const data = [
-                    {id : 1, name: "Gipsz Jakabné"},
-                    {id : 2, name: "Oláh Dzsesszika"}
-            ]
+            const conn = getCreatedConnection(connectionOptions)
+            const sql = `SELECT id, first_name, last_name, birth_at, `
+            + `children, weight, waist, cup, url FROM girls ORDER BY id LIMIT 100`
+            conn.query(sql, (error, result, fields)=>{
+                conn.destroy()
+                console.log("GET /api/girls result: ", result)
+                console.warn("GET /api/girls error: ", error)
+                return res.status(error ? 500 : 200).json({error, result})
+                
+            })
+            conn.destroy()
             return res.status(200).json({result: data})    
             
         default :

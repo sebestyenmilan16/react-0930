@@ -35,7 +35,7 @@ export default async function handler(req, res) {
 
         case "GET":
             conn = getCreatedConnection()
-            conn.query("SELECT * FROM girls", (error, result, fields)=>{
+            conn.query("SELECT id, first_name, last_name, birth_at, children, weight FROM girls", (error, result, fields)=>{
                 conn.destroy()
                 if (error) {
                     console.warn(error)

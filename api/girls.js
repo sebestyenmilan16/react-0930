@@ -23,7 +23,7 @@ export default async function handler(req, res) {
             const sql = `SELECT id, first_name, last_name, birth_at, `
             + `children, weight, waist, cup, url FROM girls ORDER BY id LIMIT 100`
             conn.query(sql, (error, result, fields)=>{
-                conn.destroy()
+                //conn.destroy()
                 console.log("GET /api/girls result: ", result)
                 console.warn("GET /api/girls error: ", error)
                 return res.status(error ? 500 : 200).json({error, result})

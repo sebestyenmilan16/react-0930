@@ -16,7 +16,7 @@ export const getCreatedConnection = (connectionOptions) => mysql.createConnectio
 const conn = getCreatedConnection(connectionOptions)
 
 export default async function handler(req, res) {
-    console.log("Some called /api/girls/ endpoint :) ")
+    console.log("Some called /api/girls/ endpoint :) Method: ", req.method) 
 
     switch (req.method) {
         case "GET" :   

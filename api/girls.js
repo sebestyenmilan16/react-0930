@@ -13,14 +13,13 @@ export const connectionOptions = {
 }
 
 export const getCreatedConnection = (connectionOptions) => mysql.createConnection(connectionOptions)
-
+const conn = getCreatedConnection(connectionOptions)
 
 export default async function handler(req, res) {
     console.log("Some called /api/girls/ endpoint :) ")
 
     switch (req.method) {
         case "GET" :   
-            const conn = getCreatedConnection(connectionOptions)
             const sql = `SELECT id, first_name, last_name, birth_at, `
             + `children, weight, waist, cup, url FROM girls ORDER BY id LIMIT 100`
             conn.query(sql, (error, result, fields)=>{
@@ -34,6 +33,7 @@ export default async function handler(req, res) {
             return res.status(200).json({result: data})    
             
         default :
+            conn.destroy()
             return res.status(405).json({error: "Method Not Allowed"})
             
         }

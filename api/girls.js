@@ -16,7 +16,7 @@ export function getCreatedConnection() {
 
 export default async function handler(req, res) {
     let conn = null
-/*    
+    
     const allowedOrigins = new Set(["http://localhost"])
     const {origin} = req.headers
     if (origin && allowedOrigins.has(origin)) {
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
             "Content-Type, x-vercel-protection-bypass"
         )
     }
-*/        
+        
     switch (req.method) {
         case "OPTIONS":
             return res.status(204).end()
